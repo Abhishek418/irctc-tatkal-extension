@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IRCTC Auto-Fill</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🚂 IRCTC Auto-Fill</h1>
+            <p class="subtitle">Fill your details once, auto-fill every time</p>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab active" data-tab="passengers">👥 Passengers</button>
+            <button class="tab" data-tab="train">🚆 Train</button>
+            <button class="tab" data-tab="payment">💳 Payment</button>
+        </nav>
+
+        <!-- Passengers Tab -->
+        <section class="tab-content active" id="tab-passengers">
+            <div id="passenger-list"></div>
+            <button class="btn btn-add" id="add-passenger">+ Add Passenger</button>
+        </section>
+
+        <!-- Train Tab -->
+        <section class="tab-content" id="tab-train">
+            <div class="form-group">
+                <label for="train-number">Train Number</label>
+                <input type="text" id="train-number" placeholder="e.g. 12952">
+            </div>
+            <div class="form-group">
+                <label for="from-station">From Station</label>
+                <input type="text" id="from-station" placeholder="e.g. NEW DELHI - NDLS">
+            </div>
+            <div class="form-group">
+                <label for="to-station">To Station</label>
+                <input type="text" id="to-station" placeholder="e.g. MUMBAI CENTRAL - MMCT">
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="journey-date">Journey Date</label>
+                    <input type="date" id="journey-date">
+                </div>
+                <div class="form-group">
+                    <label for="journey-quota">Quota</label>
+                    <select id="journey-quota">
+                        <option value="GN">General</option>
+                        <option value="TQ" selected>Tatkal</option>
+                        <option value="PT">Premium Tatkal</option>
+                        <option value="LD">Ladies</option>
+                        <option value="SS">Lower Berth/Senior Citizen</option>
+                        <option value="HP">Physically Handicapped</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="journey-class">Class</label>
+                <select id="journey-class">
+                    <option value="SL">Sleeper (SL)</option>
+                    <option value="3A" selected>AC 3 Tier (3A)</option>
+                    <option value="2A">AC 2 Tier (2A)</option>
+                    <option value="1A">AC First Class (1A)</option>
+                    <option value="3E">AC 3 Economy (3E)</option>
+                    <option value="CC">Chair Car (CC)</option>
+                    <option value="EC">Exec. Chair Car (EC)</option>
+                    <option value="2S">Second Sitting (2S)</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- Payment Tab -->
+        <section class="tab-content" id="tab-payment">
+            <div class="form-group">
+                <label for="payment-method">Payment Method</label>
+                <select id="payment-method">
+                    <option value="ewallet">IRCTC eWallet</option>
+                    <option value="upi">UPI (via IRCTC iPay)</option>
+                </select>
+            </div>
+            <div class="form-group" id="upi-group">
+                <label for="upi-id">UPI ID</label>
+                <input type="text" id="upi-id" placeholder="e.g. name@upi">
+                <small style="color: #666; font-size: 10px;">Only needed for UPI method</small>
+            </div>
+        </section>
+
+        <div class="actions">
+            <button class="btn btn-save" id="save-btn">💾 Save</button>
+            <span class="save-status" id="save-status"></span>
+        </div>
+    </div>
+
+    <!-- Passenger Row Template -->
+    <template id="passenger-template">
+        <div class="passenger-card">
+            <div class="passenger-header">
+                <span class="passenger-number">Passenger <span class="p-num"></span></span>
+                <button class="btn-remove" title="Remove passenger">✕</button>
+            </div>
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" class="p-name" placeholder="Full name">
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Age</label>
+                    <input type="number" class="p-age" placeholder="Age" min="1" max="125">
+                </div>
+                <div class="form-group">
+                    <label>Gender</label>
+                    <select class="p-gender">
+                        <option value="M">Male</option>
+                        <option value="F">Female</option>
+                        <option value="T">Transgender</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Berth</label>
+                    <select class="p-berth">
+                        <option value="">No Preference</option>
+                        <option value="LB">Lower</option>
+                        <option value="MB">Middle</option>
+                        <option value="UB">Upper</option>
+                        <option value="SL">Side Lower</option>
+                        <option value="SU">Side Upper</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Food</label>
+                    <select class="p-food">
+                        <option value="D">No Preference</option>
+                        <option value="V">Veg</option>
+                        <option value="N">Non Veg</option>
+                        <option value="J">Jain</option>
+                        <option value="F">Veg Diabetic</option>
+                        <option value="G">Non Veg Diabetic</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script src="popup.js"></script>
+</body>
+
+</html>
