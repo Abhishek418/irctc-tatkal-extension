@@ -457,13 +457,14 @@
     }
 
     /* ========== Passengers Filler ========== */
-    function fillPassengers(passengers) {
+    async function fillPassengers(passengers) {
         if (!passengers || passengers.length === 0) {
             showSuccess('No passenger data');
             return;
         }
 
-        showToast('Filling passenger details...', '👥');
+        showToast('Filling passengers in 4s...', '👥');
+        await sleep(4000);
 
         function addPassengerRow() {
             const links = document.querySelectorAll('a, span, button');
@@ -587,8 +588,9 @@
                 console.log('✅ UPI/iPay is pre-selected by default');
             }
 
-            // Click "Pay & Book" button
-            await sleep(500);
+            // Wait 5 seconds before clicking "Pay & Book"
+            showToast('Clicking Pay & Book in 5s...', '⏳');
+            await sleep(5000);
             await clickPayAndBook();
 
             // Handle post-click flow
