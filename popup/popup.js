@@ -9,6 +9,9 @@ function init() {
     loadData();
     document.getElementById('add-passenger').addEventListener('click', () => addPassengerCard());
     document.getElementById('save-btn').addEventListener('click', saveData);
+
+    // Save toggle state immediately when clicked
+    document.getElementById('extension-toggle').addEventListener('change', saveData);
 }
 
 /* ========== Tab Switching ========== */
@@ -87,6 +90,7 @@ function collectPayment() {
 /* ========== Save to Chrome Storage ========== */
 function saveData() {
     const data = {
+        enabled: document.getElementById('extension-toggle').checked,
         passengers: collectPassengers(),
         train: collectTrain(),
         payment: collectPayment()
@@ -106,10 +110,14 @@ function loadData() {
         const data = result.irctcData;
 
         if (!data) {
-            // No saved data — add one empty passenger card
+            // No saved data
             addPassengerCard();
             return;
         }
+
+        // Load toggle state (default to true)
+        const isEnabled = data.enabled !== undefined ? data.enabled : true;
+        document.getElementById('extension-toggle').checked = isEnabled;
 
         // Load passengers
         if (data.passengers && data.passengers.length > 0) {

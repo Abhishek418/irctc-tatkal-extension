@@ -10,9 +10,17 @@
 
 <body>
     <div class="container">
-        <header class="header">
-            <h1>🚂 IRCTC Auto-Fill</h1>
-            <p class="subtitle">Fill your details once, auto-fill every time</p>
+        <header class="header" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h1>🚂 IRCTC Auto-Fill</h1>
+                <p class="subtitle">Fill your details once, auto-fill every time</p>
+            </div>
+            <div class="toggle-container" title="Enable/Disable Extension">
+                <label class="switch">
+                    <input type="checkbox" id="extension-toggle" checked>
+                    <span class="slider round"></span>
+                </label>
+            </div>
         </header>
 
         <nav class="tabs">

@@ -115,6 +115,11 @@
                 return;
             }
 
+            if (data.enabled === false) {
+                console.log('[IRCTC Auto-Fill] Extension is disabled. Not filling train details.');
+                return;
+            }
+
             fillButton.disabled = true;
             fillButton.innerHTML = `<span class="irctc-icon">⏳</span> Filling...`;
 
@@ -848,14 +853,26 @@
         if (newPage && newPage !== currentPage) {
             currentPage = newPage;
 
-            if (currentPage === 'trainSearch') {
-                // Train search: show manual "Fill Now" button
-                setTimeout(() => createFillButton('Fill Train Details'), 1500);
-            } else {
-                // Passenger & Payment: auto-fill immediately (no button)
-                removeFillButton();
-                setTimeout(() => autoFillPage(), 2000);
-            }
+            // Check if extension is enabled before showing UI or auto-filling
+            chrome.storage.local.get('irctcData', (result) => {
+                const data = result.irctcData;
+                const isEnabled = data && data.enabled !== false;
+
+                if (!isEnabled) {
+                    console.log('[IRCTC Auto-Fill] Extension disabled — skipping page actions');
+                    removeFillButton();
+                    return;
+                }
+
+                if (currentPage === 'trainSearch') {
+                    // Train search: show manual "Fill Now" button
+                    setTimeout(() => createFillButton('Fill Train Details'), 1500);
+                } else {
+                    // Passenger & Payment: auto-fill immediately (no button)
+                    removeFillButton();
+                    setTimeout(() => autoFillPage(), 2000);
+                }
+            });
         } else if (!newPage) {
             currentPage = null;
             removeFillButton();
@@ -870,6 +887,11 @@
             const data = result.irctcData;
             if (!data) {
                 console.warn('[IRCTC Auto-Fill] No saved data — skipping auto-fill');
+                return;
+            }
+
+            if (data.enabled === false) {
+                console.log('[IRCTC Auto-Fill] Extension disabled — skipping auto-fill');
                 return;
             }
 
