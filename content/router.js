@@ -588,9 +588,9 @@
                 console.log('✅ UPI/iPay is pre-selected by default');
             }
 
-            // Wait 5 seconds before clicking "Pay & Book"
-            showToast('Clicking Pay & Book in 5s...', '⏳');
-            await sleep(5000);
+            // Click "Pay & Book" button
+            showToast('Clicking Pay & Book...', '⏳');
+            await sleep(500);
             await clickPayAndBook();
 
             // Handle post-click flow
